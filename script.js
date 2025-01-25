@@ -10,13 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Add task on button click
     addButton.addEventListener("click", () => {
-        addTask(taskInput.value.trim());
+        const taskText = taskInput.value.trim();
+        addTask(taskText, taskList);
     });
 
     // Add task on Enter key press
     taskInput.addEventListener("keypress", (event) => {
         if (event.key === "Enter") {
-            addTask(taskInput.value.trim());
+            const taskText = taskInput.value.trim();
+            addTask(taskText, taskList);
         }
     });
 });
@@ -24,11 +26,11 @@ document.addEventListener("DOMContentLoaded", () => {
 // Load tasks from Local Storage
 function loadTasksFromLocalStorage() {
     const storedTasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-    storedTasks.forEach((taskText) => addTask(taskText, false)); // Load tasks without saving again
+    storedTasks.forEach((taskText) => addTask(taskText, taskList, false)); // Load tasks without saving again
 }
 
 // Add task function
-function addTask(taskText, save = true) {
+function addTask(taskText, taskList, save = true) {
     if (taskText === "") {
         alert("Please enter a task."); // Alert if the task is empty
         return; // Exit the function if no task is provided
@@ -41,7 +43,7 @@ function addTask(taskText, save = true) {
     // Create remove button
     const removeButton = document.createElement("button");
     removeButton.textContent = "Remove";
-    removeButton.classList.add = "remove-btn";
+    removeButton.classList.add("remove-btn"); // Correctly add class
 
     // Remove task on button click
     removeButton.onclick = () => {
